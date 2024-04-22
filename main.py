@@ -7,7 +7,7 @@ while True:
     start = input("Om du vill starta spelet skriv S, om inte skriv end").lower()
     if start == "s":
         print("Nu kör vi!")
-        pass
+        
     
     elif start == "end":
         print("Varför inte!")
