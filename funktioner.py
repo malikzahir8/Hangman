@@ -1,3 +1,4 @@
+import time
 def gubben1():
     """Funktion för att rita gubben om har 1 fel"""
     print("""
@@ -275,3 +276,11 @@ def spelnamn():
      |___|                                                                  |___| 
     (_____)----------------------------------------------------------------(_____)
 """)
+def beskrivning():
+    """Beskrivning av spelet"""
+    text = """  Hänga Gubben är ett gissningsspel där det slumpas fram ett ord och 
+  sedan gissar spelaren vilka bokstäver som finns i ordet, 
+  annars kommer en gubbe att dö om man gissar 10 gånger fel \n \n"""
+    for ord in text:
+        print(ord, end='', flush=True)
+        time.sleep(0.05)

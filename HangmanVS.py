@@ -1,18 +1,17 @@
-import random, time, gubben, ordfil
+import random, time, funktioner, ordfil
 
-
-
+# while loop för hela spelet
 while True:
     time.sleep(0.8)
-    gubben.spelnamn()
+    funktioner.spelnamn()
     time.sleep(0.8)
-    start = str(input("  Om du vill starta spelet skriv Start\n  Om inte skriv End: ")).lower()
+    start = str(input("  Skriv\n  |Start för starta|\n  |End för avbryta| ")).lower()
     time.sleep(0.8)
     if start == "start" or start == "s":
         hurspelar = input("  Om du vill se hur spelet fungerar tryck på |?| ")
         if hurspelar == "?":
-            print(f"  Hänga Gubben är ett gissningsspel där det slumpas fram ett ord och sedan gissar spelaren vilka bokstäver som finns i ordet \n \n")
-        
+            funktioner.beskrivning()
+
         print(f"  Nu kör vi! \n \n")
         time.sleep(0.8)
 
@@ -34,9 +33,9 @@ while True:
                 print("\n   Grattis Du vann!")
                 time.sleep(0.8)
                 break
-            print(f"\n \n  Bokstäverna som du gissade fel är: {felbok}")
+            print(f"\n \n  |Bokstäverna som du gissade fel är: {felbok}")
             time.sleep(0.8)
-            svar = str(input("\n  Ange ett bokstav här:")).lower()
+            svar = str(input("\n  |Gissa ett bokstav här:")).lower()
             time.sleep(0.8)
             gissnar = gissnar + svar
 
@@ -49,25 +48,25 @@ while True:
                 time.sleep(0.8)
 
                 if antalgissnar2 == 9:
-                    gubben.gubben1()
+                    funktioner.gubben1()
                 elif antalgissnar2 == 8:
-                    gubben.gubben2()
+                    funktioner.gubben2()
                 elif antalgissnar2 == 7:
-                    gubben.gubben3()
+                    funktioner.gubben3()
                 elif antalgissnar2 == 6:
-                    gubben.gubben4()
+                    funktioner.gubben4()
                 elif antalgissnar2 == 5:
-                    gubben.gubben5()
+                    funktioner.gubben5()
                 elif antalgissnar2 == 4:
-                    gubben.gubben6()
+                    funktioner.gubben6()
                 elif antalgissnar2 == 3:
-                    gubben.gubben7()
+                    funktioner.gubben7()
                 elif antalgissnar2 == 2:
-                    gubben.gubben8()
+                    funktioner.gubben8()
                 elif antalgissnar2 == 1:
-                    gubben.gubben9()
+                    funktioner.gubben9()
                 elif antalgissnar2 == 0:
-                    gubben.gubben10()
+                    funktioner.gubben10()
                 else:
                     break
 
@@ -81,6 +80,6 @@ while True:
         time.sleep(0.8)
         break
     else:
-        print("  Start för att starta \nEnd för avbryta")
+        print("  |Start för att starta| \n|End för avbryta|")
         time.sleep(0.8)
 
