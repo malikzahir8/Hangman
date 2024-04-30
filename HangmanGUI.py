@@ -1,4 +1,3 @@
-#Standrad
 import PySimpleGUI as sg, ordfil
 
 def create_window(theme):
