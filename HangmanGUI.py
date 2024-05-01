@@ -1,52 +1,59 @@
-import PySimpleGUI as sg, ordfil
+import PySimpleGUI as sg, ordfil, random
+
+ord = random.choice(ordfil.ordlista)
+
+gissnar = ""
+felbok = []
+antalgissnar = 10
 
 def create_window(theme):
     sg.theme(theme)
     sg.set_options(font = "Helvetica 14", button_element_size = (6,3))
-    button_size = (6,3)
-    layout = [[sg.Text("", font = "Helvetica 26", justification = "right", expand_x = True, pad = (10,20), right_click_menu = theme_menu, key = "-TEXT-")],      
-        [sg.Button("Clear", expand_x = True), sg.Button("Enter", expand_x = True)],
-        [sg.Button(1, size = button_size),sg.Button(2, size = button_size),sg.Button(3, size = button_size),sg.Button("-", size = button_size)],
-        [sg.Button(0, expand_x = True),sg.Button(".", size = button_size),sg.Button("+", size = button_size)],
-        ]  
+    layout = [
+    [sg.Text("Gissa ordet ner:")],
+    [sg.Text(" ".join([x if x in gissnar else "___  " for x in ord]))],
+    [sg.Input(key="-Gissning-")],
+    [sg.Button("Gissa", size=(18, 4)), sg.Button("End", size=(18, 4))]
+    ]
     return sg.Window("Hänga Gubben", layout)
 
 theme_menu = ["menu",["LightGrey1","DarkTeal1","DarkGray8", "DarkRed", "BluePurple", "BrightColors", "BrownBlue", "Dark",]]
-window = create_window("BrownBlue") 
+window = create_window("BrownBlue")
 
-cn = []
-op = []
-
-while True:
+while antalgissnar > 0:
     event, values = window.read()
-    if event == sg.WIN_CLOSED:
-        break
-    
     if event in theme_menu[1]:
         window.close()
         window = create_window(event)
-    
-    if event in ["0","1","2","3","4","5","6","7","8","9","."]:
-        cn.append(event)
-        num_string = "".join(cn)
-        window["-TEXT-"].update(num_string)
-        
-    if event in ["+","-","/","*"]:
-        op.append("".join(cn))
-        cn = []
-        op.append(event)
-        print(op)
-        window["-TEXT-"].update("")
-        
-    if event == "Enter":
-        op.append("".join(cn))
-        result = eval(" ".join(op))
-        window["-TEXT-"].update(result)
-        op = []
-    
-    if event == "Clear":
-        cn = []
-        op = []
-        window["-TEXT-"].update("")
+    if event == "End" or event == sg.WINDOW_CLOSED:
+        break
+    if event == "Gissa":
+        guess = values["-Gissning-"].lower()
+        if guess.isalpha() and len(guess) == 1:
+            if guess in gissnar or guess in felbok:
+                sg.popup("Du har redan gissat bokstaven!")
+            else:
+                gissnar += guess
+                if guess not in ord:
+                    felbok.append(guess)
+                    antalgissnar -= 1
+                    sg.popup(f"Fel bokstav! Du har {antalgissnar} antal gissnar kvar.")
+        else:
+            sg.popup("Gissa bara en bokstav!")
+    window["-Gissning-"].update("")
+
+    for x in ord:
+        if x in gissnar:
+            print(x, end="")
+        else:
+            print("___  ", end="")
+    print()
+
+    print(f"Bokstäverna som du gissade fel är: {felbok}")
+
+if antalgissnar == 0:
+    sg.popup("Du förlorade!")
+else:
+    sg.popup("Grattis! Du vann!")
 
 window.close()
