@@ -17,11 +17,10 @@ while True:
 
         ord = random.choice(ordfil.ordlista)
         gissnar = ""
-        antalgissnar = 0
+        antalgissnar = 10
         felbok = []
-        antalgissnar2 = 10
 
-        while antalgissnar <= 10:
+        while antalgissnar > 0:
             fel = 0
             for x in ord:
                 if x in gissnar:
@@ -40,37 +39,37 @@ while True:
             gissnar = gissnar + svar
 
             if svar not in ord:
-                antalgissnar2 = antalgissnar2 - 1
+                antalgissnar = antalgissnar - 1
                 print("  FEL bokstav!")
                 felbok.append(svar)
                 time.sleep(0.8)
-                print(f"  Du har {antalgissnar2} antalgissnar kvar")
+                print(f"  Du har {antalgissnar} antalgissnar kvar")
                 time.sleep(0.8)
 
-                if antalgissnar2 == 9:
+                if antalgissnar == 9:
                     funktioner.gubben1()
-                elif antalgissnar2 == 8:
+                elif antalgissnar == 8:
                     funktioner.gubben2()
-                elif antalgissnar2 == 7:
+                elif antalgissnar == 7:
                     funktioner.gubben3()
-                elif antalgissnar2 == 6:
+                elif antalgissnar == 6:
                     funktioner.gubben4()
-                elif antalgissnar2 == 5:
+                elif antalgissnar == 5:
                     funktioner.gubben5()
-                elif antalgissnar2 == 4:
+                elif antalgissnar == 4:
                     funktioner.gubben6()
-                elif antalgissnar2 == 3:
+                elif antalgissnar == 3:
                     funktioner.gubben7()
-                elif antalgissnar2 == 2:
+                elif antalgissnar == 2:
                     funktioner.gubben8()
-                elif antalgissnar2 == 1:
+                elif antalgissnar == 1:
                     funktioner.gubben9()
-                elif antalgissnar2 == 0:
+                elif antalgissnar == 0:
                     funktioner.gubben10()
                 else:
                     break
 
-                if antalgissnar2 <= 0:
+                if antalgissnar <= 0:
                     print("  Du förlorade!!")
                     time.sleep(0.8)
                     break
