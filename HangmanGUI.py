@@ -10,26 +10,32 @@ def create_window(theme):
     sg.theme(theme)
     sg.set_options(font = "Helvetica 14", button_element_size = (1,3))
     layout = [[sg.Text("", font = "Helvetica 26", justification = "right", expand_x = True, pad = (10,20), right_click_menu = theme_menu, key = "-TEXT-")],
-    [sg.Text("Gissa ordet ner:")],
-    [sg.Text(" ".join([x if x in gissnar else "___  " for x in ord]))],
-    [sg.Input(key="-Gissning-", size=(32,3))],
-    [sg.Button("Gissa", size=(15, 3)), sg.Button("End", size=(15, 3))]
-    ]
-    return sg.Window("Hänga Gubben", layout)
+              [sg.Text("", size=(15, 10), key="-gubben-")],
+              [sg.Text("Gissa ordet ner:")],
+              [sg.Text(" ".join([x if x in gissnar else "___  " for x in ord]))],
+              [sg.Input(key="-Gissning-", size=(32,3))],
+              [sg.Button("Gissa", size=(15, 3)), sg.Button("End", size=(15, 3))]
+              ]
+    return sg.Window("Hänga Gubben", layout, element_justification="c")
 
 theme_menu = ["menu",["LightGrey1","DarkTeal1","DarkGray8", "DarkRed", "BluePurple", "BrightColors", "BrownBlue", "Dark",]]
 window = create_window("BrownBlue")
 
 while antalgissnar > 0:
     event, values = window.read()
+
+    if len(gissnar) == len(ord) and gissnar in ord:
+        sg.popup("Grattis! Du vann!")
+        break
     
     if event in theme_menu[1]:
         window.close()
         window = create_window(event)
     
     if event == "End" or event == sg.WINDOW_CLOSED:
+        sg.popup("Varför inte!")
         break
-    
+
     if event == "Gissa":
         svar = values["-Gissning-"].lower()
         if len(svar) == 1:
@@ -42,7 +48,7 @@ while antalgissnar > 0:
                     antalgissnar -= 1
                     sg.popup(f"Fel bokstav! Du har {antalgissnar} antal gissnar kvar.")
                     if antalgissnar == 9:
-                        sg.popup(sg.Image(filename="bild.png"))     #Fungerar inte
+                        funktioner.gubben1()
                     elif antalgissnar == 8:
                         funktioner.gubben2()
                     elif antalgissnar == 7:
@@ -61,6 +67,7 @@ while antalgissnar > 0:
                         funktioner.gubben9()
                     elif antalgissnar == 0:
                         funktioner.gubben10()
+                        break
                     else:
                         break
         else:
@@ -69,7 +76,7 @@ while antalgissnar > 0:
 
     for x in ord:
         if x in gissnar:
-            print(x, end="")
+            print(f" {x}  ", end="")
         else:
             print("___  ", end="")
     print()
@@ -78,7 +85,6 @@ while antalgissnar > 0:
 
 if antalgissnar == 0:
     sg.popup("Du förlorade!")
-else:
-    sg.popup("Grattis! Du vann!")
+
 
 window.close()
