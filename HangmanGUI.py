@@ -1,11 +1,14 @@
 import PySimpleGUI as sg, ordfil, random, funktioner
 
+# random ord
 ord = random.choice(ordfil.ordlista)
 
+# variabel
 gissnar = ""
 felbok = []
 antalgissnar = 10
 
+# layout som vissas i fönstret
 def create_window(theme):
     sg.theme(theme)
     sg.set_options(font = "Helvetica 14", button_element_size = (1,3))
@@ -18,12 +21,15 @@ def create_window(theme):
               ]
     return sg.Window("Hänga Gubben", layout, element_justification="c")
 
+# theme
 theme_menu = ["menu",["LightGrey1","DarkTeal1","DarkGray8", "DarkRed", "BluePurple", "BrightColors", "BrownBlue", "Dark",]]
 window = create_window("BrownBlue")
 
+# while loop för hela programmet
 while antalgissnar > 0:
     event, values = window.read()
 
+    # Om man gissat rätt
     if len(gissnar) == len(ord) and gissnar in ord:
         sg.popup("Grattis! Du vann!")
         break
@@ -35,18 +41,22 @@ while antalgissnar > 0:
     if event == "End" or event == sg.WINDOW_CLOSED:
         sg.popup("Varför inte!")
         break
-
+    # om man trycker på giss då händer det här
     if event == "Gissa":
         svar = values["-Gissning-"].lower()
         if len(svar) == 1:
+            # om den nya gissning är med i felbokstäver eller ordet så har man gissat den innan
             if svar in gissnar or svar in felbok:
                 sg.popup("Du har redan gissat bokstaven!")
             else:
                 gissnar += svar
+                # om gissningen är inte med i ordet
                 if svar not in ord:
                     felbok.append(svar)
                     antalgissnar -= 1
+                    # visar antal gissnar som är kvar
                     sg.popup(f"Fel bokstav! Du har {antalgissnar} antal gissnar kvar.")
+                    # visar olika steg av gubben beronde på antal gissnar
                     if antalgissnar == 9:
                         funktioner.gubben1()
                     elif antalgissnar == 8:
@@ -74,17 +84,19 @@ while antalgissnar > 0:
             sg.popup("Gissa bara en bokstav!")
     window["-Gissning-"].update("")
 
+    # understreck system
     for x in ord:
         if x in gissnar:
             print(f" {x}  ", end="")
         else:
             print("___  ", end="")
     print()
-
+    # felbokstäver vissa har i en lista
     print(f"Bokstäverna som du gissade fel är: {felbok}")
 
+# om antalgissnar är 0 då förlorar man
 if antalgissnar == 0:
     sg.popup("Du förlorade!")
 
-
+# för att stänga ner programmet
 window.close()

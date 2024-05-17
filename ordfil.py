@@ -1,3 +1,4 @@
+# En lista för gissins ord
 ordlista = ["dator", "vetenskap", "matematick", "övning",
             "prov", "ö", "människor", "bakgrund",
             "astronomi", "konst", "rymden", "svart",
